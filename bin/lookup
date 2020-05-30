@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+use Hoa\Console\Readline\Readline;
+use Lookup\Input;
+
+require_once(dirname(__FILE__, 2) . '/vendor/autoload.php');
+
+$readline = new Readline();
+
+do {
+    $line = $readline->readLine('> ');
+    new IOController(rtrim($line));
+} while (false !== $line && 'quit' !== $line);
+
+$input = 'mon gob type';
+new Input(rtrim($input));

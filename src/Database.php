@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Lookup;
-
 
 use PDO;
 use PDOException;
@@ -29,6 +27,14 @@ class Database
         } catch (PDOException $e) {
             throw new PDOException($e->getMessage(), (int)$e->getCode());
         }
+    }
+
+    public static function getTables()
+    {
+        $pdo = new self();
+        $sql = "SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%'";
+        $stmt = $pdo->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 
 }

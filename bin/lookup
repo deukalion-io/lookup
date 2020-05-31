@@ -2,16 +2,16 @@
 <?php
 
 use Hoa\Console\Readline\Readline;
-use Lookup\Input;
+use Lookup\IOController;
 
 require_once(dirname(__FILE__, 2) . '/vendor/autoload.php');
 
 $readline = new Readline();
 
-do {
-    $line = $readline->readLine('> ');
-    new IOController(rtrim($line));
-} while (false !== $line && 'quit' !== $line);
+//do {
+//    $line = $readline->readLine('> ');
+//    new IOController(rtrim($line));
+//} while (false !== $line && 'quit' !== $line);
 
-$input = 'mon gob type';
-new Input(rtrim($input));
+$input = 'mon gob ac, hp, str, con';
+IOController::processInput($input);

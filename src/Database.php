@@ -8,6 +8,7 @@ use PDOException;
 class Database
 {
     public $pdo;
+    public static $table;
 
     public function __construct($options = [])
     {
@@ -35,6 +36,10 @@ class Database
         $sql = "SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%'";
         $stmt = $pdo->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    public function setTable($table) {
+        self::$table = $table;
     }
 
 }

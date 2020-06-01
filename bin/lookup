@@ -14,4 +14,5 @@ $readline = new Readline();
 //} while (false !== $line && 'quit' !== $line);
 
 $input = 'mon gob ac, hp, str, con';
-IOController::processInput($input);
+$controller = new IOController($input);
+$controller->process();

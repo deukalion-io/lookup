@@ -28,15 +28,18 @@ class CommandContext
     {
         $context = [];
         if ($firstArg = substr($input, 0, strpos($input, ' '))) {
-            if ($expanded = self::expandTableShortform($firstArg)) {
+            if ($expanded = current(self::expandTableShortform($firstArg))) {
+                $firstArg = Util::wrap_in_char($firstArg, '/');
                 $params = preg_replace($firstArg, $expanded, $input,1);
                 $context['action'] = 'query';
                 $context['params'] = $params;
             } else {
-                $params = explode(' ', $input, 1);
+                $params = explode(' ', $input);
                 $context['action'] = $params[0];
                 $context['params'] = $params[1];
             }
+        } else {
+            $context['action'] = $input;
         }
         return $context;
     }

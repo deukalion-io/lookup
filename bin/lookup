@@ -8,11 +8,13 @@ require_once(dirname(__FILE__, 2) . '/vendor/autoload.php');
 
 $readline = new Readline();
 
-//do {
-//    $line = $readline->readLine('> ');
-//    new IOController(rtrim($line));
-//} while (false !== $line && 'quit' !== $line);
+do {
+    $input = $readline->readLine('> ');
+    $controller = new IOController($input);
+    $controller->processInput();
+} while (false !== $input && 'quit' !== $input);
 
-$input = 'mon gob ac, hp, str, con';
-$controller = new IOController($input);
-$controller->process();
+//$input = 'mon gob ac, hp, str, con';
+//$input = 'use';
+//$controller = new IOController($input);
+//$controller->processInput();

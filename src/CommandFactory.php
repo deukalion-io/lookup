@@ -8,7 +8,6 @@ use Exception;
 
 class CommandFactory
 {
-    private static $dir = 'commands';
 
     public static function getCommand(string $action = 'Default'): Command
     {

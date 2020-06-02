@@ -42,4 +42,8 @@ class Database
         self::$table = $table;
     }
 
+    public function getTable() {
+        return self::$table;
+    }
+
 }

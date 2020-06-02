@@ -20,31 +20,30 @@ class IOController
         $this->context = new CommandContext($input);
     }
 
-    public function process()
+    public function processInput()
     {
-        $action = $this->context['action'];
+        $action = $this->context->context['action'];
         $action = ( is_null($action) ) ? "default" : $action;
         $cmd = CommandFactory::getCommand($action);
-        if (! $cmd->execute($this->context)) {
+        if (! $output = $cmd->execute($this->context)) {
             // handle failure
-                    } else {
-            // success
-            // dispatch view
+        } else {
+            $this->processOutput($output);
         }
     }
 
-//    public static function processOutput($results)
-//    {
-//        $table = new ConsoleTable();
-//        $headers = array_keys($results[0]);
-//        $columns = array_values($results[0]);
-//        foreach ($headers as $header) {
-//            $table->addRow()
-//                ->addHeader($header);
-//        }
-//        foreach ($columns as $column) {
-//            $table->addColumn($column);
-//        }
-//        $table->display();
-//    }
+    public function processOutput($output)
+    {
+        $table = new ConsoleTable();
+        $headers = array_keys($output[0]);
+        $columns = array_values($output[0]);
+        foreach ($headers as $header) {
+            $table->addRow()
+                ->addHeader($header);
+        }
+        foreach ($columns as $column) {
+            $table->addColumn($column);
+        }
+        $table->display();
+    }
 }

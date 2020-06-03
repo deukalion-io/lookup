@@ -29,8 +29,8 @@ class CommandContext
         $context = [];
         if ($firstArg = substr($input, 0, strpos($input, ' '))) {
             if ($expanded = current(self::expandTableShortform($firstArg))) {
-                $firstArg = Util::wrap_in_char($firstArg, '/');
-                $params = preg_replace($firstArg, $expanded, $input,1);
+                $pattern = '/' . $firstArg . '/';
+                $params = preg_replace($pattern, $expanded, $input,1);
                 $context['action'] = 'query';
                 $context['params'] = $params;
             } else {
@@ -50,12 +50,13 @@ class CommandContext
      */
 
     public static function expandTableShortform($shortform) {
-        $shortform = '/^' . $shortform . '/';
-        $match = preg_grep($shortform, Database::getTables());
+        $pattern = '/^' . $shortform . '/';
+        if (!$match = preg_grep($pattern, Database::getTables())) {
+            throw new TableNotExists('nooo');
+        }
         if (count($match) > 1) {
             // TODO: add logic for multiple results with same letter combination. Throw exception?
-        } else {
-            return $match;
         }
+        return $match;
     }
 }

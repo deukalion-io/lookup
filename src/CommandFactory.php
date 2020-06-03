@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Lookup;
-
 
 use Exception;
 
@@ -14,13 +12,10 @@ class CommandFactory
         if (preg_match('/\W/', $action)) {
             throw new Exception("illegal characters in action");
         }
-
-        $class = __NAMESPACE__ . "\\commands\\" . UCFirst(strtolower($action)) . "Command";
-
+        $class = __NAMESPACE__ . "\\Commands\\" . UCFirst(strtolower($action)) . "Command";
         if (! class_exists($class)) {
-            throw new CommandNotFoundException("no '$class' class located");
+            throw new CommandNotFound($action);
         }
-
         return new $class();
     }
 }

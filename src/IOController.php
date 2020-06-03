@@ -2,6 +2,7 @@
 
 namespace Lookup;
 
+use Exception;
 use LucidFrame\Console\ConsoleTable;
 
 /**
@@ -24,11 +25,16 @@ class IOController
     {
         $action = $this->context->context['action'];
         $action = ( is_null($action) ) ? "default" : $action;
-        $cmd = CommandFactory::getCommand($action);
-        if (! $output = $cmd->execute($this->context)) {
-            // handle failure
-        } else {
-            $this->processOutput($output);
+        try {
+            $cmd = CommandFactory::getCommand($action);
+            if (! $output = $cmd->execute($this->context)) {
+                // handle failure
+            } else {
+                $this->processOutput($output);
+            }
+        }
+        catch (Exception $e) {
+            echo $e;
         }
     }
 

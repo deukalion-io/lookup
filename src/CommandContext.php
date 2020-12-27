@@ -16,7 +16,6 @@ namespace Lookup;
 
 class CommandContext
 {
-
     public $context = [];
 
     public function __construct($input)
@@ -60,3 +59,7 @@ class CommandContext
         return $match;
     }
 }
+
+//if (preg_match('/\W/', $action)) {
+//    throw new Exception("illegal characters in action");
+//}

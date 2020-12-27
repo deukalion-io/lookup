@@ -25,16 +25,11 @@ class IOController
     {
         $action = $this->context->context['action'];
         $action = ( is_null($action) ) ? "default" : $action;
-        try {
-            $cmd = CommandFactory::getCommand($action);
-            if (! $output = $cmd->execute($this->context)) {
-                // handle failure
-            } else {
-                $this->processOutput($output);
-            }
-        }
-        catch (Exception $e) {
-            echo $e;
+        $cmd = CommandFactory::getCommand($action);
+        if (! $output = $cmd->execute($this->context)) {
+            // handle failure
+        } else {
+            $this->processOutput($output);
         }
     }
 

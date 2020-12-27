@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Lookup;
+namespace Lookup\Exceptions;
 
 
 use Exception;

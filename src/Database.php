@@ -18,9 +18,7 @@ class Database
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         ];
         $options = array_replace($default_options, $options);
-
         $dbpath = dirname(dirname(__FILE__)) . '/db/lookup.db';
-
         $dsn = "sqlite:$dbpath";
 
         try {
@@ -30,20 +28,15 @@ class Database
         }
     }
 
-    public static function getTables()
+    /**
+     * @return array
+     */
+    public static function getTables(): array
     {
         $pdo = new self();
         $sql = "SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%'";
         $stmt = $pdo->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
-    }
-
-    public function setTable($table) {
-        self::$table = $table;
-    }
-
-    public function getTable() {
-        return self::$table;
     }
 
 }

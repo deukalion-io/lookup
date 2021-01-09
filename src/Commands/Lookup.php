@@ -8,9 +8,10 @@ use Lookup\Database;
 use Lookup\Util;
 use stdClass;
 
-class QueryCommand extends Command
+class DefaultCommand extends Command
 {
-    public function parse($context)
+
+    public function parse($context): stdClass
     {
         $queryObj = new stdClass();
         $identifiers = explode(' ', $context['params'], 3);
@@ -22,12 +23,12 @@ class QueryCommand extends Command
         return $queryObj;
     }
 
-    public function execute(CommandContext $context)
+    public function execute(CommandContext $context): array
     {
         $queryObj = $this->parse($context->context);
         $table = $queryObj->table;
         $name = Util::wrap_in_char($queryObj->name, '%');
-        if ($column = $queryObj->fields){
+        if ($column = $queryObj->fields ?? null){
             $query = "SELECT {$column} FROM {$table} WHERE name LIKE '{$name}'";
         } else {
             $query = "SELECT * FROM {$table} WHERE name LIKE '{$name}'";

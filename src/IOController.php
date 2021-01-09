@@ -16,6 +16,8 @@ class IOController
 {
     private $context;
 
+    public $output;
+
     public function __construct($input)
     {
         $this->context = new CommandContext($input);
@@ -23,28 +25,36 @@ class IOController
 
     public function processInput()
     {
-        $action = $this->context->context['action'];
-        $action = ( is_null($action) ) ? "default" : $action;
-        $cmd = CommandFactory::getCommand($action);
+        $cmd = CommandFactory::getCommand($this->context->context['action']);
         if (! $output = $cmd->execute($this->context)) {
             // handle failure
         } else {
-            $this->processOutput($output);
+            $this->output = $output;
         }
     }
 
-    public function processOutput($output)
+    public function processOutput()
     {
-        $table = new ConsoleTable();
-        $headers = array_keys($output[0]);
-        $columns = array_values($output[0]);
-        foreach ($headers as $header) {
-            $table->addRow()
-                ->addHeader($header);
-        }
-        foreach ($columns as $column) {
-            $table->addColumn($column);
-        }
-        $table->display();
+
+//        $fields = ['Name', 'Level', 'School', 'Casting time', 'Range', 'Components', 'Duration', 'Classes', 'Description'];
+//        $longest = 0;
+//        foreach ($fields as $field) {
+//            $length = strlen($field);
+//            if ($length > $longest) {
+//                $longest = $length;
+//            }
+//        }
+//        foreach ($output as $result) {
+//            // Remove ID field
+//            array_shift($result);
+//            $arr = array_combine($fields, $result);
+//            foreach ($arr as $header => $value) {
+//                $header = str_pad($header, $longest, ' ', STR_PAD_LEFT );
+//                echo $header. ': ' . $value . "\n";
+//            }
+//        }
+        //if ($this->context->context[''])
+
+
     }
 }

@@ -10,10 +10,15 @@ $readline = new Readline();
 
 do {
     $input = $readline->readLine('> ');
-    $controller = new IOController($input);
-    $controller->processInput();
+    try {
+        $controller = new IOController($input);
+        $controller->processInput();
+        $controller->processOutput();
+    } catch (Exception $e) {
+        echo $e;
+    }
 } while (false !== $input && 'quit' !== $input);
 
-//$input = 'mon gob ac, hp';
+//$input = "sql select name, level from spell where class like druid";
 //$controller = new IOController($input);
 //$controller->processInput();
